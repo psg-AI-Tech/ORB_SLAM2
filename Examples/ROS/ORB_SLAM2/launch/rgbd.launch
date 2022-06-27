@@ -1,0 +1,14 @@
+<launch>
+    
+    <arg name="vocarg" default="/home/zj/catkin_ws/src/rosPack_amend/ORB_SLAM2/Vocabulary/ORBvoc.txt"/>
+    <arg name="conarg" default="/home/zj/catkin_ws/src/rosPack_amend/ORB_SLAM2/Examples/RGB-D/TUM1.yaml"/>
+    <arg name="rosbag" default="/media/zj/Ubuntu/DataSet/TUM/rgbd_ros_bag/rgbd_dataset_freiburg2_pioneer_slam.bag"/>
+
+    <node pkg="ORB_SLAM2" type="RGBD" name="RGBD" args="$(arg vocarg) $(arg conarg)">
+        <remap from="camera/depth_registered/image_raw" to="camera/depth/image"/>
+        <remap from="camera/rgb/image_raw" to="camera/rgb/image_color"/>
+    </node>
+    <node pkg="rosbag" type="play" name="rgbd_rosbagplay" args="$(arg rosbag) --clock -d 5" required="true"/>
+    
+
+</launch>
